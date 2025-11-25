@@ -169,7 +169,7 @@ function updateKelasInfo() {
   const box = document.getElementById("kelasInfo");
   const val = document.getElementById("kelas").value;
   box.classList.remove("hidden");
-  box.textContent = val === "Kelas Asas" ? "4 jam – teori & demo. Termasuk sijil." : "6 jam – teori, praktikal & ujian. Termasuk sijil & kad BLS.";
+  box.textContent = val === "Kelas Asas" ? "Teori & demo selama 4 jam – peserta akan menerima sijil penyertaan." : "Teori, praktikal & ujian selama 6 jam – peserta menerima sijil & kad BLS rasmi.";
 }
 
 function highlightLevel() {
@@ -184,9 +184,9 @@ function highlightLevel() {
   if (level == "4") { msg.classList.add("level4", "glow-blue"); }
 
   const teks = {
-    1: "Level 1: Terima anggaran harga sahaja.",
-    2: "Level 2: Kami akan hubungi untuk semakan tarikh.",
-    3: "Level 3: Paling popular. Terus semak slot & deposit.",
+    1: "Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
+    2: "Level 2: Kami akan hubungi anda untuk semak tarikh & harga.",
+    3: "Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.",
     4: "Level 4: Fast lane! Booking terus & bayar penuh.",
   };
 
