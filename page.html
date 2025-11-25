@@ -3,21 +3,260 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Redirect ke WhatsApp</title>
-  <script>
-    window.onload = function() {
-      const params = new URLSearchParams(window.location.search);
-      const name = params.get('name');
-      const location = params.get('location');
-      const phone = params.get('phone');
-      const count = params.get('count');
-      const msg = `1. Nama: ${name}%0A2. Lokasi: ${location}%0A3. No Tel: ${phone}%0A4. Jumlah Peserta: ${count}`;
-      const whatsappURL = `https://wa.me/601114160068?text=${msg}`;
-      window.location.href = whatsappURL;
+  <title>Pendaftaran Kelas CPR Hero</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f7fb;
+      margin: 0;
+      padding: 0;
+      color: #222;
     }
-  </script>
+
+    .hero {
+      width: 100%;
+      text-align: center;
+      background: #fff;
+      padding: 20px 0;
+    }
+
+    .hero img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      display: block;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(16, 24, 40, 0.08);
+    }
+
+    .container {
+      max-width: 520px;
+      margin: 40px auto;
+      padding: 32px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    input[type="text"],
+select,
+input[type="number"] {
+  width: 100%;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  appearance: none; /* buang gaya default browser (penting untuk select & number) */
+  background-color: #fff;
+  
+    }
+select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='gray' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px;
+}
+    
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: auto;
+      margin: 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .info-box {
+      font-size: 13px;
+      color: #333;
+      margin-top: 8px;
+      background: #f0f8ff;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #1ebe5d;
+      transform: translateY(-1px);
+    }
+
+    footer.note {
+      padding: 14px 18px;
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      background: #fbfdff;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-  <p>Sila tunggu, sedang membuka WhatsApp anda...</p>
+
+  <!-- Bahagian Hero -->
+  <section class="hero">
+    <img src="images/salespagecprhero.webp" alt="Poster CPR Hero">
+  </section>
+
+  <div class="container">
+    <h1>Pendaftaran Kelas CPR & Heimlich Maneuver</h1>
+    <p class="subtitle">
+      Isi maklumat ringkas di bawah untuk kami kongsikan harga yuran, tarikh dan slot kosong.
+      Selepas tekan “WhatsApp ke CPR Hero”, WhatsApp anda akan terbuka dengan mesej pra-isian — semak dan hantar untuk proses seterusnya.
+    </p>
+
+    <!-- Nama -->
+    <label>Nama</label>
+    <input type="text" id="nama" placeholder="Contoh: Nur" />
+
+    <!-- Jenis Kelas -->
+    <label>Jenis kelas</label>
+    <select id="kelas" onchange="updateKelasInfo()">
+      <option value="" disabled selected>Pilih jenis kelas</option>
+      <option value="Kelas Asas">Kelas Asas</option>
+      <option value="Kelas Lengkap">Kelas Lengkap</option>
+    </select>
+    <div id="kelasInfo" class="info-box hidden"></div>
+
+    <!-- Jumlah Peserta -->
+    <label>Anggaran jumlah peserta</label>
+    <input type="number" id="jumlah" value="1" min="1" />
+
+    <!-- Lokasi -->
+    <label>Lokasi Kelas</label>
+    <select id="lokasi" onchange="toggleLokasi()">
+      <option value="" disabled selected>Pilih lokasi</option>
+      <option value="Kuala Terengganu">Kuala Terengganu</option>
+      <option value="Seremban">Seremban</option>
+      <option value="Jemput CPR Hero ke lokasi saya">Jemput CPR Hero ke lokasi saya (min 5 peserta)</option>
+    </select>
+
+    <!-- Lokasi tambahan -->
+    <div id="alamatBox" class="hidden">
+      <label>Alamat lokasi & tarikh dicadangkan</label>
+      <input type="text" id="alamat" placeholder="Contoh: Dewan Seri, 10 Disember 2025" />
+    </div>
+
+    <!-- Tahap Kesediaan -->
+    <label>Tahap kesediaan</label>
+    <select id="level" onchange="updateLevelMsg()">
+      <option value="" disabled selected>Pilih tahap kesediaan</option>
+      <option value="1">Level 1 – Nak tahu harga sahaja</option>
+      <option value="2">Level 2 – Nak tahu harga & semak tarikh</option>
+      <option value="3">Level 3 – Confirm & buat deposit</option>
+    </select>
+    <div id="levelMsg" class="info-box hidden"></div>
+
+    <!-- Button -->
+    <button onclick="hantarWhatsApp()">WhatsApp ke CPR Hero!</button>
+  </div>
+
+  <footer class="note">Form by CPR Hero</footer>
+
+  <script>
+    function toggleLokasi() {
+      const lokasi = document.getElementById("lokasi").value;
+      const alamatBox = document.getElementById("alamatBox");
+      alamatBox.classList.toggle("hidden", lokasi !== "Jemput CPR Hero ke lokasi saya");
+    }
+
+    function updateKelasInfo() {
+      const kelasSelect = document.getElementById("kelas");
+      const kelasInfo = document.getElementById("kelasInfo");
+      kelasInfo.classList.remove("hidden");
+
+      if (kelasSelect.value === "Kelas Asas") {
+        kelasInfo.textContent = "Teori & demo selama 4 jam – peserta akan menerima sijil penyertaan.";
+      } else if (kelasSelect.value === "Kelas Lengkap") {
+        kelasInfo.textContent = "Teori, praktikal & ujian selama 6 jam – peserta menerima sijil & kad BLS rasmi.";
+      } else {
+        kelasInfo.classList.add("hidden");
+      }
+    }
+
+    function updateLevelMsg() {
+      const levelSelect = document.getElementById("level");
+      const levelMsg = document.getElementById("levelMsg");
+      levelMsg.classList.remove("hidden");
+      if (levelSelect.value === "1") {
+        levelMsg.textContent = "Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.";
+      } else if (levelSelect.value === "2") {
+        levelMsg.textContent = "Level 2: Kami akan hubungi anda untuk semak tarikh & harga.";
+      } else if (levelSelect.value === "3") {
+        levelMsg.textContent = "Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.";
+      } else {
+        levelMsg.classList.add("hidden");
+      }
+    }
+
+    function hantarWhatsApp() {
+      const nama = document.getElementById("nama").value.trim();
+      const kelas = document.getElementById("kelas").value;
+      const jumlah = document.getElementById("jumlah").value;
+      const lokasi = document.getElementById("lokasi").value;
+      const alamat = document.getElementById("alamat")?.value.trim();
+      const level = document.getElementById("level").value;
+
+      if (!nama || !kelas || !jumlah || !lokasi || !level) {
+        alert("Sila isi semua maklumat wajib sebelum menghantar.");
+        return;
+      }
+
+      let mesej = `Hai CPR Hero 👋%0A`;
+      mesej += `Nama: ${nama}%0A`;
+      mesej += `Jenis Kelas: ${kelas}%0A`;
+      mesej += `Anggaran Peserta: ${jumlah}%0A`;
+      mesej += `Lokasi: ${lokasi}%0A`;
+      if (alamat) mesej += `Alamat/Tarikh dicadangkan: ${alamat}%0A`;
+      mesej += `Tahap: Level ${level}%0A`;
+      mesej += `%0ATerima kasih.`;
+
+      const whatsappURL = `https://wa.me/601114160068?text=${mesej}`;
+      window.open(whatsappURL, "_blank");
+    }
+  </script>
 </body>
 </html>
