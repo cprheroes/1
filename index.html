@@ -178,6 +178,7 @@ function highlightLevel() {
   const msg = document.getElementById("levelMsg");
 
   msg.className = "info-box";
+  msg.classList.remove("hidden");
 
   if (level == "1") msg.classList.add("level1");
   if (level == "2") msg.classList.add("level2");
