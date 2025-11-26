@@ -166,24 +166,44 @@ footer.note {
 <footer class="note">Form by CPR Hero</footer>
 
 <script>
+/* --- Kelas info --- */
 function updateKelasInfo() {
   const box = document.getElementById("kelasInfo");
   const val = document.getElementById("kelas").value;
+  if (!val) {
+    box.classList.add("hidden");
+    box.textContent = "";
+    return;
+  }
   box.classList.remove("hidden");
-  box.textContent = val === "Kelas Asas" ? "Teori & demo selama 4 jam – peserta akan menerima sijil penyertaan." : "Teori, praktikal & ujian selama 6 jam – peserta menerima sijil & kad BLS rasmi.";
+  if (val === "Kelas Asas") {
+    box.textContent = "Teori & demo selama 4 jam – peserta akan menerima sijil penyertaan.";
+  } else if (val === "Kelas Lengkap") {
+    box.textContent = "Teori, praktikal & ujian selama 6 jam – peserta menerima sijil & kad BLS rasmi.";
+  }
 }
 
+/* --- Level highlight & message --- */
 function highlightLevel() {
   const level = document.getElementById("level").value;
   const msg = document.getElementById("levelMsg");
 
+  // Reset classes but keep the base style 'info-box'
   msg.className = "info-box";
   msg.classList.remove("hidden");
 
-  if (level == "1") msg.classList.add("level1");
-  if (level == "2") msg.classList.add("level2");
-  if (level == "3") { msg.classList.add("level3", "glow-green"); }
-  if (level == "4") { msg.classList.add("level4", "glow-blue"); }
+  // Remove any previous level classes and glow classes
+  msg.classList.remove("level1","level2","level3","level4","glow-green","glow-blue");
+
+  if (level === "1") {
+    msg.classList.add("level1");
+  } else if (level === "2") {
+    msg.classList.add("level2");
+  } else if (level === "3") {
+    msg.classList.add("level3","glow-green");
+  } else if (level === "4") {
+    msg.classList.add("level4","glow-blue");
+  }
 
   const teks = {
     1: "Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
@@ -192,9 +212,11 @@ function highlightLevel() {
     4: "Level 4: Fast lane! Booking terus & bayar penuh.",
   };
 
-  msg.textContent = teks[level];
+  // Fallback if level not set
+  msg.textContent = teks[level] || "";
 }
 
+/* --- Hantar ke WhatsApp (pastikan semua medan wajib diisi) --- */
 function hantarWhatsApp() {
   const nama = document.getElementById("nama").value.trim();
   const kelas = document.getElementById("kelas").value;
@@ -208,22 +230,26 @@ function hantarWhatsApp() {
     return;
   }
 
-  let mesej = `Hai CPR Hero 👋%0A`;
-  mesej += `Nama: ${nama}%0A`;
-  mesej += `Jenis Kelas: ${kelas}%0A`;
-  mesej += `Anggaran Peserta: ${jumlah}%0A`;
-  mesej += `Cadangan Tarikh: ${bulan} ${tahun}%0A`;
-  mesej += `Tahap Kesediaan: Level ${level}%0A`;
+  // Compose message then encode
+  let mesej = `Hai CPR Hero 👋\n`;
+  mesej += `Nama: ${nama}\n`;
+  mesej += `Jenis Kelas: ${kelas}\n`;
+  mesej += `Anggaran Peserta: ${jumlah}\n`;
+  mesej += `Cadangan Tarikh: ${bulan} ${tahun}\n`;
+  mesej += `Tahap Kesediaan: Level ${level}\n\n`;
 
-  const teks = {
+  const teksLevel = {
     1: "Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
     2: "Level 2: Kami akan hubungi anda untuk semak tarikh & harga.",
     3: "Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.",
     4: "Level 4: Fast lane! Booking terus & bayar penuh.",
   };
 
-  mesej += `%0A${teks[level]}%0A%0ATerima kasih.`;
+  mesej += `${teksLevel[level]}\n\nTerima kasih.`;
 
-  const whatsappURL = `https://wa.me/601114160068?text=${mesej}`;
+  const whatsappURL = `https://wa.me/601114160068?text=${encodeURIComponent(mesej)}`;
   window.open(whatsappURL, "_blank");
 }
+</script>
+</body>
+</html>
