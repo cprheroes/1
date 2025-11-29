@@ -1,206 +1,229 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Borang CPR Hero</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pendaftaran Kelas CPR Hero</title>
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f4f7fb;
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+.hero {
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  padding: 20px 0;
+}
+.hero img {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(16, 24, 40, 0.08);
+}
+.container {
+  max-width: 520px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+h1 {
+  text-align: center;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+p.subtitle {
+  text-align: center;
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+label {
+  display: block;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+input[type="text"], select, input[type="number"] {
+  width: 100%;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  appearance: none;
+  background-color: #fff;
+}
+select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='gray' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px;
+}
+.info-box {
+  font-size: 13px;
+  color: #333;
+  margin-top: 8px;
+  background: #f0f8ff;
+  padding: 10px;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+.level1 { background: #ffe5e5; border-left: 4px solid #ff3b3b; }
+.level2 { background: #fff3e0; border-left: 4px solid #ff9800; }
+.level3 { background: #eaffe5; border-left: 4px solid #0a7d00; }
+.level4 { background: #e7f1ff; border-left: 4px solid #1a73e8; }
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fa;
-      padding: 20px;
-    }
+.glow-green { animation: glowGreen 1.5s infinite alternate; }
+@keyframes glowGreen { 0% { box-shadow: 0 0 0px rgba(0, 255, 102, 0.4); } 100% { box-shadow: 0 0 12px rgba(0, 255, 102, 0.7); } }
+.glow-blue { animation: glowBlue 1.5s infinite alternate; }
+@keyframes glowBlue { 0% { box-shadow: 0 0 0px rgba(30, 136, 229, 0.4); } 100% { box-shadow: 0 0 12px rgba(30, 136, 229, 0.7); } }
 
-    .container {
-      max-width: 550px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    label {
-      font-weight: bold;
-      margin-top: 12px;
-      display: block;
-    }
-
-    select, input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .info-box {
-      font-size: 14px;
-      margin-top: 6px;
-      padding: 10px;
-      border-radius: 8px;
-      background: #eef4ff;
-      border-left: 4px solid #3b82f6;
-    }
-
-    /* LEVEL COLORS */
-    .level1 { background:#fff4e6; border-left:4px solid #ff9800; }
-    .level2 { background:#e8f7ff; border-left:4px solid #0288d1; }
-    .level3 { background:#e9ffe8; border-left:4px solid #4caf50; }
-    .level4 { background:#f0e8ff; border-left:4px solid #673ab7; }
-
-    /* Glow effects */
-    .glow-green { box-shadow:0 0 10px #4caf50; }
-    .glow-blue  { box-shadow:0 0 10px #3b82f6; }
-
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background: #06b6d4;
-      border: none;
-      color: white;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0891b2;
-    }
-  </style>
+button {
+  margin-top: 30px;
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #25d366;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+footer.note {
+  padding: 14px 18px;
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+  background: #fbfdff;
+  margin-top: 40px;
+}
+.hidden { display: none; }
+</style>
 </head>
 
 <body>
+<section class="hero">
+  <img src="images/salespagecprhero.webp" alt="Poster CPR Hero">
+</section>
 
 <div class="container">
+<h1>Pendaftaran Kelas CPR & Heimlich Maneuver</h1>
+<p class="subtitle">Isi maklumat di bawah. Selepas tekan WhatsApp, mesej pra-isian akan terbuka untuk semakan.</p>
 
-  <h2>Borang Sebut Harga CPR Hero</h2>
+<!-- NAMA -->
+<label>Nama</label>
+<input type="text" id="nama" placeholder="Contoh: Nur" />
 
-  <!-- NAMA -->
-  <label>Nama Penuh</label>
-  <input type="text" id="nama" placeholder="Nama anda">
+<!-- JENIS KELAS -->
+<label>Jenis kelas</label>
+<select id="kelas" onchange="updateKelasInfo()">
+  <option value="" disabled selected>Pilih jenis kelas</option>
+  <option value="Kelas Asas">Kelas Asas</option>
+  <option value="Kelas Lengkap">Kelas Lengkap</option>
+</select>
+<div id="kelasInfo" class="info-box hidden"></div>
 
-  <!-- JENIS KELAS -->
-  <label>Jenis Kelas</label>
-  <select id="kelas" onchange="updateKelasInfo()">
-    <option value="">-- Pilih --</option>
-    <option value="Kelas Asas">Kelas Asas</option>
-    <option value="Kelas Lengkap">Kelas Lengkap</option>
-  </select>
-  <div id="kelasInfo" class="info-box hidden"></div>
+<!-- LOKASI BARU -->
+<label>Lokasi kelas</label>
+<select id="lokasi" onchange="updateLokasiInfo()">
+  <option value="" disabled selected>Pilih lokasi</option>
+  <option value="Di premis CPR Hero">Di premis CPR Hero (Gong Badak)</option>
+  <option value="On-site di tempat anda">On-site (kami datang ke lokasi anda)</option>
+</select>
+<div id="lokasiInfo" class="info-box hidden"></div>
 
-  <!-- LOKASI -->
-  <label>Lokasi</label>
-  <select id="lokasi" onchange="updateLokasiInfo()">
-    <option value="">-- Pilih --</option>
-    <option value="Kuala Terengganu">Kuala Terengganu</option>
-    <option value="Seremban">Seremban</option>
-    <option value="Custom">Jemput kami ke lokasi anda!</option>
-  </select>
-  <div id="lokasiInfo" class="info-box hidden"></div>
+<!-- PESERTA -->
+<label>Anggaran jumlah peserta</label>
+<input type="number" id="jumlah" value="1" min="1" />
 
-  <!-- ANGGRAN PESERTA -->
-  <label>Anggaran Jumlah Peserta</label>
-  <input type="number" id="jumlah" placeholder="Contoh: 20">
-
-  <!-- BULAN -->
-  <label>Cadangan Bulan</label>
+<!-- TARIKH -->
+<label>Cadangan tarikh (bulan & tahun)</label>
+<div style="display: flex; gap: 10px;">
   <select id="bulan">
-    <option value="">-- Pilih Bulan --</option>
-    <option value="Januari">Januari</option>
-    <option value="Februari">Februari</option>
-    <option value="Mac">Mac</option>
-    <option value="April">April</option>
-    <option value="Mei">Mei</option>
-    <option value="Jun">Jun</option>
-    <option value="Julai">Julai</option>
-    <option value="Ogos">Ogos</option>
-    <option value="September">September</option>
-    <option value="Oktober">Oktober</option>
-    <option value="November">November</option>
-    <option value="Disember">Disember</option>
+    <option value="" disabled selected>Bulan</option>
+    <option>Januari</option><option>Februari</option><option>Mac</option>
+    <option>April</option><option>Mei</option><option>Jun</option>
+    <option>Julai</option><option>Ogos</option><option>September</option>
+    <option>Oktober</option><option>November</option><option>Disember</option>
   </select>
 
-  <!-- TAHUN -->
-  <label>Cadangan Tahun</label>
   <select id="tahun">
-    <option value="">-- Pilih Tahun --</option>
-    <option value="2025">2025</option>
-    <option value="2026">2026</option>
-    <option value="2027">2027</option>
+    <option value="" disabled selected>Tahun</option>
+    <option>2025</option><option>2026</option>
   </select>
-
-  <!-- TAHAP KESEDIAAN -->
-  <label>Tahap Kesediaan</label>
-  <select id="level" onchange="highlightLevel()">
-    <option value="">-- Pilih --</option>
-    <option value="1">Level 1 – Baru nak survey</option>
-    <option value="2">Level 2 – Nak tahu lebih lanjut</option>
-    <option value="3">Level 3 – Sedia booking</option>
-    <option value="4">Level 4 – Terus nak booking & bayar</option>
-  </select>
-  <div id="levelMsg" class="info-box hidden"></div>
-
-  <button onclick="hantarWhatsApp()">Hantar Ke WhatsApp</button>
-
 </div>
 
+<!-- LEVEL -->
+<label>Tahap kesediaan</label>
+<select id="level" onchange="highlightLevel()">
+  <option value="" disabled selected>Pilih tahap kesediaan</option>
+  <option value="1">Level 1 – Nak tahu harga sahaja</option>
+  <option value="2">Level 2 – Nak tahu harga & semak tarikh</option>
+  <option value="3">Level 3 – Confirm & buat deposit (paling popular)</option>
+  <option value="4">Level 4 – Bayar penuh & booking terus</option>
+</select>
+<div id="levelMsg" class="info-box hidden"></div>
+
+<button onclick="hantarWhatsApp()">WhatsApp ke CPR Hero!</button>
+</div>
+
+<footer class="note">Form by CPR Hero</footer>
+
 <script>
-/* -------------------------------------- */
-/* EXPLAIN KELAS */
-/* -------------------------------------- */
+// =================== KELAS ===================
 function updateKelasInfo() {
   const box = document.getElementById("kelasInfo");
   const val = document.getElementById("kelas").value;
 
-  if (!val) {
-    box.classList.add("hidden");
-    box.textContent = "";
-    return;
-  }
+  if (!val) return box.classList.add("hidden");
 
   box.classList.remove("hidden");
+
   box.textContent =
     val === "Kelas Asas"
       ? "Teori & demo selama 4 jam – peserta akan menerima sijil penyertaan."
       : "Teori, praktikal & ujian selama 6 jam – peserta menerima sijil & kad BLS rasmi.";
 }
 
-/* -------------------------------------- */
-/* EXPLAIN LOKASI */
-/* -------------------------------------- */
+// =================== LOKASI — BARU ===================
 function updateLokasiInfo() {
   const box = document.getElementById("lokasiInfo");
   const val = document.getElementById("lokasi").value;
 
-  if (val === "Custom") {
-    box.classList.remove("hidden");
-    box.textContent =
-      "Tambahan RM100 per pax untuk Transport Charge & bergantung kesesuaian lokasi.";
+  if (!val) return box.classList.add("hidden");
+
+  box.classList.remove("hidden");
+
+  if (val === "Di premis CPR Hero") {
+    box.textContent = "Lokasi: CPR Hero Training Centre, Gong Badak. Premis lengkap dengan manikin & peralatan.";
   } else {
-    box.classList.add("hidden");
-    box.textContent = "";
+    box.textContent = "On-site: Trainer akan datang ke lokasi anda. Sesuai untuk organisasi, taska, pejabat & event.";
   }
 }
 
-/* -------------------------------------- */
-/* EXPLAIN LEVEL */
-/* -------------------------------------- */
+// =================== LEVEL ===================
 function highlightLevel() {
   const level = document.getElementById("level").value;
   const msg = document.getElementById("levelMsg");
 
   msg.className = "info-box";
   msg.classList.remove("hidden");
-
-  msg.classList.remove(
-    "level1","level2","level3","level4","glow-green","glow-blue"
-  );
+  msg.classList.remove("level1","level2","level3","level4","glow-green","glow-blue");
 
   if (level === "1") msg.classList.add("level1");
   if (level === "2") msg.classList.add("level2");
@@ -208,52 +231,51 @@ function highlightLevel() {
   if (level === "4") msg.classList.add("level4","glow-blue");
 
   const teks = {
-    1: "Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
-    2: "Level 2: Kami akan hubungi anda untuk semak tarikh & harga.",
-    3: "Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.",
-    4: "Level 4: Fast lane! Booking terus & bayar penuh.",
+    1:"Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
+    2:"Level 2: Kami akan hubungi anda untuk semak tarikh & harga.",
+    3:"Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.",
+    4:"Level 4: Fast lane! Booking terus & bayar penuh."
   };
-
   msg.textContent = teks[level];
 }
 
-/* -------------------------------------- */
-/* WHATSAPP */
-/* -------------------------------------- */
+// =================== WHATSAPP ===================
 function hantarWhatsApp() {
   const nama = document.getElementById("nama").value.trim();
   const kelas = document.getElementById("kelas").value;
-  const jumlah = document.getElementById("jumlah").value;
   const lokasi = document.getElementById("lokasi").value;
+  const jumlah = document.getElementById("jumlah").value;
   const bulan = document.getElementById("bulan").value;
   const tahun = document.getElementById("tahun").value;
   const level = document.getElementById("level").value;
 
-  if (!nama || !kelas || !jumlah || !lokasi || !bulan || !tahun || !level) {
+  if (!nama || !kelas || !lokasi || !jumlah || !bulan || !tahun || !level) {
     alert("Sila isi semua maklumat.");
     return;
   }
 
   const teksLevel = {
-    1: "Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
-    2: "Level 2: Kami akan hubungi anda untuk semak tarikh & harga.",
-    3: "Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.",
-    4: "Level 4: Fast lane! Booking terus & bayar penuh.",
+    1:"Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
+    2:"Level 2: Kami akan hubungi anda untuk semak tarikh & harga.",
+    3:"Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.",
+    4:"Level 4: Fast lane! Booking terus & bayar penuh."
   };
 
-  let mesej = `Hai CPR Hero 👋\n`;
-  mesej += `Nama: ${nama}\n`;
-  mesej += `Jenis Kelas: ${kelas}\n`;
-  mesej += `Lokasi: ${lokasi}\n`;
-  mesej += `Anggaran Peserta: ${jumlah}\n`;
-  mesej += `Cadangan Tarikh: ${bulan} ${tahun}\n`;
-  mesej += `Tahap Kesediaan: Level ${level}\n\n`;
-  mesej += `${teksLevel[level]}\n\nTerima kasih.`;
+  let mesej =
+`Hai CPR Hero 👋
+Nama: ${nama}
+Jenis Kelas: ${kelas}
+Lokasi: ${lokasi}
+Anggaran Peserta: ${jumlah}
+Cadangan Tarikh: ${bulan} ${tahun}
+Tahap Kesediaan: Level ${level}
 
-  const whatsappURL =
-    "https://wa.me/601114160068?text=" + encodeURIComponent(mesej);
+${teksLevel[level]}
 
-  window.open(whatsappURL, "_blank");
+Terima kasih.`;
+
+  const url = "https://wa.me/601114160068?text=" + encodeURIComponent(mesej);
+  window.open(url, "_blank");
 }
 </script>
 
