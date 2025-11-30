@@ -142,7 +142,8 @@ footer.note {
 <label>Lokasi kelas</label>
 <select id="lokasi" onchange="updateLokasiInfo()">
   <option value="" disabled selected>Pilih lokasi</option>
-  <option value="Di premis CPR Hero">Di premis CPR Hero (Gong Badak)</option>
+  <option value="Kuala Terengganu">Kuala Terengganu</option>
+  <option value="Seremban">Seremban</option>
   <option value="On-site di tempat anda">On-site (kami datang ke lokasi anda)</option>
 </select>
 <div id="lokasiInfo" class="info-box hidden"></div>
@@ -196,11 +197,11 @@ function updateKelasInfo() {
 
   box.textContent =
     val === "Kelas Asas"
-      ? "Teori & demo selama 4 jam – peserta akan menerima sijil penyertaan."
-      : "Teori, praktikal & ujian selama 6 jam – peserta menerima sijil & kad BLS rasmi.";
+      ? "Teori dan demo selama 4 jam – peserta akan menerima sijil penyertaan."
+      : "Teori, praktikal dan ujian selama 6 jam – peserta menerima sijil dan kad BLS rasmi.";
 }
 
-// =================== LOKASI — BARU ===================
+// =================== LOKASI – BARU ===================
 function updateLokasiInfo() {
   const box = document.getElementById("lokasiInfo");
   const val = document.getElementById("lokasi").value;
@@ -209,10 +210,12 @@ function updateLokasiInfo() {
 
   box.classList.remove("hidden");
 
-  if (val === "Di premis CPR Hero") {
-    box.textContent = "Lokasi: CPR Hero Training Centre, Gong Badak. Premis lengkap dengan manikin & peralatan.";
+  if (val === "Kuala Terengganu") {
+    box.textContent = "Di premis CPR Hero (di Kuala Nerus).";
+  } else if (val === "Seremban") {
+    box.textContent = "Di premis CPR Hero (di Seremban 2).";
   } else {
-    box.textContent = "On-site: Trainer akan datang ke lokasi anda. Sesuai untuk organisasi, taska, pejabat & event.";
+    box.textContent = "Trainer akan datang ke lokasi anda. Sesuai dianjurkan oleh organisasi, taska, pejabat dan event. Bergantung kesesuaian lokasi.";
   }
 }
 
@@ -232,9 +235,9 @@ function highlightLevel() {
 
   const teks = {
     1:"Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
-    2:"Level 2: Kami akan hubungi anda untuk semak tarikh & harga.",
-    3:"Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.",
-    4:"Level 4: Fast lane! Booking terus & bayar penuh."
+    2:"Level 2: Kami akan hubungi anda untuk semak tarikh dan harga.",
+    3:"Level 3: Kami akan terus semak slot dan hantar quotation untuk deposit.",
+    4:"Level 4: Fast lane! Booking terus dan bayar penuh."
   };
   msg.textContent = teks[level];
 }
@@ -256,9 +259,9 @@ function hantarWhatsApp() {
 
   const teksLevel = {
     1:"Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
-    2:"Level 2: Kami akan hubungi anda untuk semak tarikh & harga.",
-    3:"Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.",
-    4:"Level 4: Fast lane! Booking terus & bayar penuh."
+    2:"Level 2: Kami akan hubungi anda untuk semak tarikh dan harga.",
+    3:"Level 3: Kami akan terus semak slot dan hantar quotation untuk deposit.",
+    4:"Level 4: Fast lane! Booking terus dan bayar penuh."
   };
 
   let mesej =
