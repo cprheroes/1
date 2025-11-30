@@ -4,6 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pendaftaran Kelas CPR Hero</title>
+<meta name="description" content="Daftar kelas CPR & Heimlich Maneuver dengan CPR Hero. Sijil BLS rasmi, kelas di Kuala Terengganu dan Seremban atau on-site.">
+<meta property="og:title" content="Pendaftaran Kelas CPR Hero">
+<meta property="og:description" content="Daftar kelas CPR & Heimlich Maneuver dengan CPR Hero">
+<meta property="og:image" content="images/salespagecprhero.webp">
 <style>
 body {
   font-family: 'Inter', sans-serif;
@@ -53,9 +57,8 @@ label {
   font-weight: 600;
   font-size: 0.95rem;
 }
-input[type="text"], select, input[type="number"] {
+input[type="text"], select, input[type="number"], textarea {
   width: 100%;
-  height: 44px;
   box-sizing: border-box;
   padding: 10px 12px;
   margin-top: 6px;
@@ -63,8 +66,32 @@ input[type="text"], select, input[type="number"] {
   border-radius: 8px;
   font-size: 0.95rem;
   outline: none;
-  appearance: none;
   background-color: #fff;
+  transition: border-color 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+input[type="text"], select, input[type="number"] {
+  height: 44px;
+  appearance: none;
+}
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+input[type="text"]:focus, select:focus, input[type="number"]:focus, textarea:focus {
+  border-color: #25d366;
+}
+.field-error {
+  border-color: #ff3b3b !important;
+  animation: shake 0.3s;
+}
+.field-success {
+  border-color: #0a7d00 !important;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
 }
 select {
   background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='gray' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
@@ -81,17 +108,19 @@ select {
   border-radius: 6px;
   transition: 0.3s ease;
 }
-.level1 { background: #ffe5e5; border-left: 4px solid #ff3b3b; }
-.level2 { background: #fff3e0; border-left: 4px solid #ff9800; }
-.level3 { background: #eaffe5; border-left: 4px solid #0a7d00; }
-.level4 { background: #e7f1ff; border-left: 4px solid #1a73e8; }
+.action1 { background: #ffe5e5; border-left: 4px solid #ff3b3b; }
+.action2 { background: #fff3e0; border-left: 4px solid #ff9800; }
+.action3 { background: #eaffe5; border-left: 4px solid #0a7d00; }
+
+.glow-red { animation: glowRed 1.5s infinite alternate; }
+@keyframes glowRed { 0% { box-shadow: 0 0 0px rgba(255, 59, 59, 0.4); } 100% { box-shadow: 0 0 12px rgba(255, 59, 59, 0.7); } }
+
+.glow-yellow { animation: glowYellow 1.5s infinite alternate; }
+@keyframes glowYellow { 0% { box-shadow: 0 0 0px rgba(255, 152, 0, 0.4); } 100% { box-shadow: 0 0 12px rgba(255, 152, 0, 0.7); } }
 
 .glow-green { animation: glowGreen 1.5s infinite alternate; }
 @keyframes glowGreen { 0% { box-shadow: 0 0 0px rgba(0, 255, 102, 0.4); } 100% { box-shadow: 0 0 12px rgba(0, 255, 102, 0.7); } }
-.glow-blue { animation: glowBlue 1.5s infinite alternate; }
-@keyframes glowBlue { 0% { box-shadow: 0 0 0px rgba(30, 136, 229, 0.4); } 100% { box-shadow: 0 0 12px rgba(30, 136, 229, 0.7); } }
 
-/* Anggaran Harga Yuran title styling */
 #estimateTitle {
   text-align: center;
   font-size: 1.1rem;
@@ -101,12 +130,11 @@ select {
   display: none;
 }
 
-/* Anggaran Harga Yuran styling (centered) */
 .estimate-wrap {
   margin-top: 12px;
   margin-bottom: 6px;
   transition: all 0.35s ease;
-  text-align: center; /* ← CENTER EVERYTHING */
+  text-align: center;
   line-height: 1;
 }
 .estimate-amount {
@@ -124,7 +152,6 @@ select {
   margin-bottom: 8px;
 }
 
-/* fade */
 .fade-in {
   opacity: 0;
   transform: translateY(6px);
@@ -147,6 +174,18 @@ button {
   cursor: pointer;
   transition: 0.2s ease;
 }
+button:hover {
+  background-color: #1ea952;
+  transform: translateY(-1px);
+}
+button:active {
+  transform: translateY(0);
+}
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
 footer.note {
   padding: 14px 18px;
   text-align: center;
@@ -156,12 +195,35 @@ footer.note {
   margin-top: 40px;
 }
 .hidden { display: none; }
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: 24px;
+  }
+  h1 {
+    font-size: 1.4rem;
+  }
+  button {
+    padding: 16px;
+    font-size: 1.05rem;
+  }
+  input[type="text"], select, input[type="number"], textarea {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
 </style>
 </head>
 
 <body>
 <section class="hero">
-  <img src="images/salespagecprhero.webp" alt="Poster CPR Hero">
+  <img 
+    src="images/salespagecprhero.webp" 
+    alt="Banner kelas CPR Hero - Kursus CPR dan Heimlich Maneuver" 
+    loading="lazy"
+    width="800"
+    height="450">
 </section>
 
 <div class="container">
@@ -169,21 +231,21 @@ footer.note {
 <p class="subtitle">Isi maklumat di bawah. Selepas tekan WhatsApp, mesej pra-isian akan terbuka untuk semakan.</p>
 
 <!-- NAMA -->
-<label>Nama</label>
-<input type="text" id="nama" placeholder="Contoh: Nur" />
+<label for="nama">Nama</label>
+<input type="text" id="nama" placeholder="Contoh: Nur" aria-required="true" />
 
 <!-- JENIS KELAS -->
-<label>Jenis kelas</label>
-<select id="kelas" onchange="updateKelasInfo(); recalcAndAnimate();">
+<label for="kelas">Jenis kelas</label>
+<select id="kelas" aria-label="Pilih jenis kelas" aria-required="true" onchange="updateKelasInfo(); recalcAndAnimate();">
   <option value="" disabled selected>Pilih jenis kelas</option>
   <option value="Kelas Asas">Kelas Asas</option>
   <option value="Kelas Lengkap">Kelas Lengkap</option>
 </select>
 <div id="kelasInfo" class="info-box hidden"></div>
 
-<!-- LOKASI BARU -->
-<label>Lokasi kelas</label>
-<select id="lokasi" onchange="updateLokasiInfo(); recalcAndAnimate();">
+<!-- LOKASI -->
+<label for="lokasi">Lokasi kelas</label>
+<select id="lokasi" aria-label="Pilih lokasi kelas" aria-required="true" onchange="updateLokasiInfo(); recalcAndAnimate();">
   <option value="" disabled selected>Pilih lokasi</option>
   <option value="Kuala Terengganu">Kuala Terengganu</option>
   <option value="Seremban">Seremban</option>
@@ -192,13 +254,13 @@ footer.note {
 <div id="lokasiInfo" class="info-box hidden"></div>
 
 <!-- PESERTA -->
-<label>Anggaran jumlah peserta</label>
-<input type="number" id="jumlah" value="1" min="1" onchange="recalcAndAnimate();" oninput="recalcAndAnimate();" />
+<label for="jumlah">Anggaran jumlah peserta</label>
+<input type="number" id="jumlah" value="1" min="1" aria-required="true" onchange="recalcAndAnimate();" oninput="recalcAndAnimate();" />
 
 <!-- TARIKH -->
 <label>Cadangan tarikh (bulan & tahun)</label>
 <div style="display: flex; gap: 10px;">
-  <select id="bulan" onchange="recalcAndAnimate();">
+  <select id="bulan" aria-label="Pilih bulan" aria-required="true" onchange="recalcAndAnimate();">
     <option value="" disabled selected>Bulan</option>
     <option>Januari</option><option>Februari</option><option>Mac</option>
     <option>April</option><option>Mei</option><option>Jun</option>
@@ -206,13 +268,13 @@ footer.note {
     <option>Oktober</option><option>November</option><option>Disember</option>
   </select>
 
-  <select id="tahun" onchange="recalcAndAnimate();">
+  <select id="tahun" aria-label="Pilih tahun" aria-required="true" onchange="recalcAndAnimate();">
     <option value="" disabled selected>Tahun</option>
     <option>2025</option><option>2026</option>
   </select>
 </div>
 
-<!-- NEW TITLE -->
+<!-- ESTIMATE -->
 <div id="estimateTitle">Anggaran Harga Yuran</div>
 
 <div id="estimateArea" class="estimate-wrap" aria-live="polite">
@@ -220,23 +282,49 @@ footer.note {
   <span id="estimateNote" class="estimate-note" style="display:none;">(Sila lengkapkan pilihan untuk lihat anggaran)</span>
 </div>
 
-<!-- LEVEL -->
-<label>Tahap kesediaan</label>
-<select id="level" onchange="highlightLevel()">
-  <option value="" disabled selected>Pilih tahap kesediaan</option>
-  <option value="1">Level 1 – Nak tahu harga sahaja</option>
-  <option value="2">Level 2 – Nak tahu harga & semak tarikh</option>
-  <option value="3">Level 3 – Confirm & buat deposit (paling popular)</option>
-  <option value="4">Level 4 – Bayar penuh & booking terus</option>
+<!-- PILIH TINDAKAN SETERUSNYA -->
+<label for="action">Pilih tindakan seterusnya</label>
+<select id="action" aria-label="Pilih tindakan seterusnya" aria-required="true" onchange="highlightAction()">
+  <option value="" disabled selected>Pilih tindakan</option>
+  <option value="1">🔴 Saya nak tanya detail sebelum confirm deposit</option>
+  <option value="2">🟡 Saya nak semak slot & buat deposit</option>
+  <option value="3">🟢 Saya nak booking & bayar penuh sekarang</option>
 </select>
-<div id="levelMsg" class="info-box hidden"></div>
+<div id="actionMsg" class="info-box hidden"></div>
 
-<button onclick="hantarWhatsApp()">WhatsApp ke CPR Hero!</button>
+<!-- SOALAN (CONDITIONAL) -->
+<div id="soalanContainer" class="hidden">
+  <label for="soalan">Soalan anda (pilihan)</label>
+  <textarea id="soalan" placeholder="Contoh: Ada Special Price tak kalau ramai? Ada Referral Reward: Yuran percuma untuk introducer tak?"></textarea>
+</div>
+
+<button id="submitBtn" onclick="hantarWhatsApp()">WhatsApp ke CPR Hero!</button>
 </div>
 
 <footer class="note">Form by CPR Hero</footer>
 
 <script>
+// =================== UTILITY: SANITIZE INPUT ===================
+function sanitizeInput(str) {
+  return str.trim().replace(/[<>]/g, '');
+}
+
+// =================== UTILITY: VALIDATE FIELD ===================
+function validateField(fieldId) {
+  const field = document.getElementById(fieldId);
+  const value = field.value.trim();
+  
+  if (!value) {
+    field.classList.add('field-error');
+    field.classList.remove('field-success');
+    return false;
+  }
+  
+  field.classList.remove('field-error');
+  field.classList.add('field-success');
+  return true;
+}
+
 // =================== KELAS ===================
 function updateKelasInfo() {
   const box = document.getElementById("kelasInfo");
@@ -252,7 +340,7 @@ function updateKelasInfo() {
       : "Teori, praktikal dan ujian selama 6 jam – peserta menerima sijil dan kad BLS rasmi.";
 }
 
-// =================== LOKASI – BARU ===================
+// =================== LOKASI ===================
 function updateLokasiInfo() {
   const box = document.getElementById("lokasiInfo");
   const val = document.getElementById("lokasi").value;
@@ -270,27 +358,34 @@ function updateLokasiInfo() {
   }
 }
 
-// =================== LEVEL ===================
-function highlightLevel() {
-  const level = document.getElementById("level").value;
-  const msg = document.getElementById("levelMsg");
+// =================== ACTION ===================
+function highlightAction() {
+  const action = document.getElementById("action").value;
+  const msg = document.getElementById("actionMsg");
+  const soalanContainer = document.getElementById("soalanContainer");
 
   msg.className = "info-box";
   msg.classList.remove("hidden");
-  msg.classList.remove("level1","level2","level3","level4","glow-green","glow-blue");
+  msg.classList.remove("action1","action2","action3","glow-red","glow-yellow","glow-green");
 
-  if (level === "1") msg.classList.add("level1");
-  if (level === "2") msg.classList.add("level2");
-  if (level === "3") msg.classList.add("level3","glow-green");
-  if (level === "4") msg.classList.add("level4","glow-blue");
+  // Show/hide soalan field based on selection
+  if (action === "1") {
+    soalanContainer.classList.remove("hidden");
+    msg.classList.add("action1","glow-red");
+  } else {
+    soalanContainer.classList.add("hidden");
+    document.getElementById("soalan").value = ""; // Clear soalan if hidden
+  }
+
+  if (action === "2") msg.classList.add("action2","glow-yellow");
+  if (action === "3") msg.classList.add("action3","glow-green");
 
   const teks = {
-    1:"Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
-    2:"Level 2: Kami akan hubungi anda untuk semak tarikh dan harga.",
-    3:"Level 3: Kami akan terus semak slot dan hantar quotation untuk deposit.",
-    4:"Level 4: Fast lane! Booking terus dan bayar penuh."
+    1:"Hantar mesej auto dengan nama, kelas, tarikh cadangan & soalan anda.",
+    2:"Kami akan hubungi anda untuk confirm slot dan hantar link deposit.",
+    3:"Secure tempat anda terus tanpa tunggu."
   };
-  msg.textContent = teks[level];
+  msg.textContent = teks[action];
 }
 
 // =================== PRICE LOGIC ===================
@@ -298,16 +393,14 @@ const PRICES = {
   "Kelas Asas": 250,
   "Kelas Lengkap": 350
 };
-// location extra per pax
+
 function locationExtraPerPax(locVal) {
   if (!locVal) return 0;
   if (locVal === "Kuala Terengganu") return 0;
   if (locVal === "Seremban") return 100;
-  // On-site and any other map to 100 per pax
   return 100;
 }
 
-// compute total numeric
 function computeTotal() {
   const kelas = document.getElementById("kelas").value;
   const lokasi = document.getElementById("lokasi").value;
@@ -320,10 +413,8 @@ function computeTotal() {
   return (base + extra) * jumlah;
 }
 
-// =================== MASK & SPELLING (Category A) ===================
-// produce masked string like RM2XXX.XX or RM2XX.XX (always two decimals .XX)
+// =================== MASK & SPELLING ===================
 function maskAmount(total) {
-  // ensure total number
   const n = Math.max(0, Math.round(total));
   if (n >= 1000) {
     const leading = Math.floor(n / 1000);
@@ -332,14 +423,11 @@ function maskAmount(total) {
     const leading = Math.floor(n / 100);
     return `RM${leading}XX.XX`;
   } else {
-    // under 100: show RM0XX.XX or RM0X? They said RM2XX for 250 so use RM0XX for <100
-    const leading = Math.floor(n / 10); // show tens
+    const leading = Math.floor(n / 10);
     return `RM${leading}X.XX`;
   }
 }
 
-// =================== EJAAN (A3: puluh->ratus->ribu->ratus ribu->juta) ===================
-// helpers for words
 function onesWord(i) {
   const map = ["Kosong","Satu","Dua","Tiga","Empat","Lima","Enam","Tujuh","Lapan","Sembilan"];
   return map[i] || String(i);
@@ -353,19 +441,11 @@ function teensWord(n) {
 }
 function tensWord(tens) {
   const map = {
-    10: "Sepuluh",
-    20: "Dua Puluh",
-    30: "Tiga Puluh",
-    40: "Empat Puluh",
-    50: "Lima Puluh",
-    60: "Enam Puluh",
-    70: "Tujuh Puluh",
-    80: "Lapan Puluh",
-    90: "Sembilan Puluh"
+    10: "Sepuluh", 20: "Dua Puluh", 30: "Tiga Puluh", 40: "Empat Puluh",
+    50: "Lima Puluh", 60: "Enam Puluh", 70: "Tujuh Puluh", 80: "Lapan Puluh", 90: "Sembilan Puluh"
   };
   return map[tens] || String(tens);
 }
-// three-digit full (used for thousands -> we might trim later)
 function threeDigitsToMalay(n) {
   n = Math.max(0, Math.min(999, Math.floor(n)));
   const h = Math.floor(n / 100);
@@ -393,81 +473,70 @@ function threeDigitsToMalay(n) {
   return parts.join(" ");
 }
 
-// main categoryText using the new rounding rules you confirmed
 function categoryText(total) {
   const n = Math.max(0, Math.round(total));
-  // zero / not ready
   if (n === 0) return "(Sila lengkapkan pilihan untuk lihat anggaran)";
-
-  // less than 10
   if (n < 10) return "(Kurang dari Sepuluh Ringgit)";
 
-  // 10..99 -> round to tens (drop ones). e.g., 85 -> 80 -> "Lapan Puluh Ringgit"
   if (n >= 10 && n < 100) {
     const tens = Math.floor(n / 10) * 10;
     return `(Lebih kurang dalam ${tensWord(tens)} Ringgit)`;
   }
 
-  // 100..999 -> round to hundreds (drop tens/ones). e.g., 250 -> 200 -> "Dua Ratus Ringgit"
   if (n >= 100 && n < 1000) {
     const hundredsDigit = Math.floor(n / 100);
     const hundredsText = (hundredsDigit === 1) ? "Seratus" : onesWord(hundredsDigit) + " Ratus";
     return `(Lebih kurang dalam ${hundredsText} Ringgit)`;
   }
 
-  // 1,000 .. 99,999 -> use thousands (floor(n/1000)) and spell that number (no further detail)
   if (n >= 1000 && n < 100000) {
-    const thousands = Math.floor(n / 1000); // 1..99
-    const thouText = threeDigitsToMalay(thousands); // handles up to 999 but here typically <= 99
+    const thousands = Math.floor(n / 1000);
+    const thouText = threeDigitsToMalay(thousands);
     return `(Lebih kurang dalam ${thouText} Ribu Ringgit)`;
   }
 
-  // 100,000 .. 999,999 -> round thousands to nearest ten-thousands (drop last digit of thousands)
-  // e.g., 172300 -> thousands=172 -> drop last digit -> 170 -> "Seratus Tujuh Puluh Ribu"
   if (n >= 100000 && n < 1000000) {
-    const thousands = Math.floor(n / 1000); // e.g., 172
-    const truncatedThousands = Math.floor(thousands / 10) * 10; // e.g., 170
-    const text = threeDigitsToMalay(truncatedThousands); // "Seratus Tujuh Puluh"
+    const thousands = Math.floor(n / 1000);
+    const truncatedThousands = Math.floor(thousands / 10) * 10;
+    const text = threeDigitsToMalay(truncatedThousands);
     return `(Lebih kurang dalam ${text} Ribu Ringgit)`;
   }
 
-  // 1,000,000 and above -> use millions (floor(n/1_000_000)), spell that number, "Juta Ringgit"
   if (n >= 1000000) {
     const millions = Math.floor(n / 1000000);
-    const millionsText = threeDigitsToMalay(millions); // e.g., 2 -> "Dua"
+    const millionsText = threeDigitsToMalay(millions);
     return `(Lebih kurang dalam ${millionsText} Juta Ringgit)`;
   }
 
-  // fallback
   return "(Sila lengkapkan pilihan untuk lihat anggaran)";
 }
 
-// =================== COUNTER ANIMATION (1 second) ===================
+// =================== COUNTER ANIMATION ===================
 let currentDisplayedValue = 0;
 let animFrame = null;
+
 function animateTo(target, duration = 1000) {
-  cancelAnimation(); // stop previous
+  cancelAnimation();
   const start = performance.now();
   const from = currentDisplayedValue || 0;
   function step(ts) {
     const elapsed = ts - start;
     const t = Math.min(1, elapsed / duration);
-    // easeOutQuad
     const ease = 1 - (1 - t) * (1 - t);
     const val = Math.round(from + (target - from) * ease);
     currentDisplayedValue = val;
-    // update masked display based on current animated val to show progressive effect
     updateEstimateDisplayMasked(val);
     if (t < 1) {
       animFrame = requestAnimationFrame(step);
     } else {
       animFrame = null;
       currentDisplayedValue = target;
-      updateEstimateDisplayMasked(target); // ensure final
+      updateEstimateDisplayMasked(target);
     }
   }
   animFrame = requestAnimationFrame(step);
 }
+
 function cancelAnimation() {
   if (animFrame) {
     cancelAnimationFrame(animFrame);
@@ -475,18 +544,15 @@ function cancelAnimation() {
   }
 }
 
-// update actual DOM elements (masked & note)
 function updateEstimateDisplayMasked(numericValue) {
   const titleEl = document.getElementById("estimateTitle");
   const amountEl = document.getElementById("estimateAmount");
   const noteEl = document.getElementById("estimateNote");
 
-  // ensure visible
   if (amountEl.style.display === "none") {
     amountEl.style.display = "block";
     amountEl.classList.add("fade-in");
   } else {
-    // re-trigger small fade
     amountEl.classList.remove("fade-in");
     void amountEl.offsetWidth;
     amountEl.classList.add("fade-in");
@@ -500,7 +566,6 @@ function updateEstimateDisplayMasked(numericValue) {
     noteEl.classList.add("fade-in");
   }
 
-  // ensure title visible
   if (titleEl.style.display === "none") {
     titleEl.style.display = "block";
     titleEl.classList.add("fade-in");
@@ -510,16 +575,13 @@ function updateEstimateDisplayMasked(numericValue) {
   noteEl.textContent = categoryText(numericValue);
 }
 
-// wrapper: recalc and animate from currentDisplayedValue to new total
 function recalcAndAnimate() {
-  // show estimate area when name has any content; if name empty hide estimate
   const nameVal = document.getElementById("nama").value.trim();
   const amountEl = document.getElementById("estimateAmount");
   const noteEl = document.getElementById("estimateNote");
   const titleEl = document.getElementById("estimateTitle");
 
   if (!nameVal) {
-    // hide estimate entirely until name filled
     amountEl.style.display = "none";
     noteEl.style.display = "none";
     titleEl.style.display = "none";
@@ -528,10 +590,8 @@ function recalcAndAnimate() {
     return;
   }
 
-  // compute
   const total = computeTotal();
 
-  // if total is 0 (e.g., no selection yet) show RM0.00 and the "(Sila lengkapkan...)" text
   if (total === 0) {
     cancelAnimation();
     currentDisplayedValue = 0;
@@ -546,18 +606,16 @@ function recalcAndAnimate() {
     return;
   }
 
-  // animate number to total (rounded)
   animateTo(Math.round(total), 1000);
 }
 
-// attach event to name to reveal RM0.00 on input
+// Event listener for nama field
 document.getElementById("nama").addEventListener("input", function() {
   const nameVal = this.value.trim();
   const amountEl = document.getElementById("estimateAmount");
   const noteEl = document.getElementById("estimateNote");
   const titleEl = document.getElementById("estimateTitle");
   if (nameVal) {
-    // show RM0.00 initially if other fields not ready
     if (amountEl.style.display === "none") {
       amountEl.style.display = "block";
       amountEl.classList.add("fade-in");
@@ -570,10 +628,8 @@ document.getElementById("nama").addEventListener("input", function() {
       titleEl.style.display = "block";
       titleEl.classList.add("fade-in");
     }
-    // attempt a quick recalc (in case other fields already filled)
     recalcAndAnimate();
   } else {
-    // hide if name cleared
     amountEl.style.display = "none";
     noteEl.style.display = "none";
     titleEl.style.display = "none";
@@ -582,50 +638,96 @@ document.getElementById("nama").addEventListener("input", function() {
   }
 });
 
-// also ensure onchange/input handlers trigger recalc
+// Additional event listeners
 document.getElementById("kelas").addEventListener("input", recalcAndAnimate);
 document.getElementById("lokasi").addEventListener("input", recalcAndAnimate);
 document.getElementById("jumlah").addEventListener("input", recalcAndAnimate);
 document.getElementById("bulan").addEventListener("input", recalcAndAnimate);
 document.getElementById("tahun").addEventListener("input", recalcAndAnimate);
 
-// =================== WHATSAPP ===================
+// =================== WHATSAPP WITH ERROR HANDLING ===================
 function hantarWhatsApp() {
-  const nama = document.getElementById("nama").value.trim();
-  const kelas = document.getElementById("kelas").value;
-  const lokasi = document.getElementById("lokasi").value;
-  const jumlah = document.getElementById("jumlah").value;
-  const bulan = document.getElementById("bulan").value;
-  const tahun = document.getElementById("tahun").value;
-  const level = document.getElementById("level").value;
+  try {
+    // Validate all fields
+    const nama = sanitizeInput(document.getElementById("nama").value);
+    const kelas = document.getElementById("kelas").value;
+    const lokasi = document.getElementById("lokasi").value;
+    const jumlah = document.getElementById("jumlah").value;
+    const bulan = document.getElementById("bulan").value;
+    const tahun = document.getElementById("tahun").value;
+    const action = document.getElementById("action").value;
 
-  if (!nama || !kelas || !lokasi || !jumlah || !bulan || !tahun || !level) {
-    alert("Sila isi semua maklumat.");
-    return;
-  }
+    // Visual validation
+    let allValid = true;
+    allValid = validateField("nama") && allValid;
+    allValid = validateField("kelas") && allValid;
+    allValid = validateField("lokasi") && allValid;
+    allValid = validateField("jumlah") && allValid;
+    allValid = validateField("bulan") && allValid;
+    allValid = validateField("tahun") && allValid;
+    allValid = validateField("action") && allValid;
 
-  const teksLevel = {
-    1:"Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
-    2:"Level 2: Kami akan hubungi anda untuk semak tarikh dan harga.",
-    3:"Level 3: Kami akan terus semak slot dan hantar quotation untuk deposit.",
-    4:"Level 4: Fast lane! Booking terus dan bayar penuh."
-  };
+    if (!allValid || !nama || !kelas || !lokasi || !jumlah || !bulan || !tahun || !action) {
+      alert("Sila isi semua maklumat dengan lengkap.");
+      return;
+    }
 
-  let mesej =
+    // Disable button and show loading
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.textContent = "Menghantar...";
+
+    const actionText = {
+      1:"🔴 Saya nak tanya detail sebelum confirm deposit",
+      2:"🟡 Saya nak semak slot & buat deposit",
+      3:"🟢 Saya nak booking & bayar penuh sekarang"
+    };
+
+    let mesej =
 `Hai CPR Hero 👋
+
 Nama: ${nama}
 Jenis Kelas: ${kelas}
 Lokasi: ${lokasi}
 Anggaran Peserta: ${jumlah}
 Cadangan Tarikh: ${bulan} ${tahun}
-Tahap Kesediaan: Level ${level}
+Tindakan Seterusnya: ${actionText[action]}`;
 
-${teksLevel[level]}
+    // Add soalan if action is 1
+    if (action === "1") {
+      const soalan = sanitizeInput(document.getElementById("soalan").value);
+      if (soalan) {
+        mesej += `\n\nSoalan saya: ${soalan}`;
+      }
+    }
 
-Terima kasih.`;
+    mesej += "\n\nTerima kasih.";
 
-  const url = "https://wa.me/601114160068?text=" + encodeURIComponent(mesej);
-  window.open(url, "_blank");
+    const url = "https://wa.me/601114160068?text=" + encodeURIComponent(mesej);
+    
+    // Open WhatsApp
+    const whatsappWindow = window.open(url, "_blank");
+    
+    // Reset button after short delay
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = "WhatsApp ke CPR Hero!";
+    }, 2000);
+
+    // Check if popup was blocked
+    if (!whatsappWindow || whatsappWindow.closed || typeof whatsappWindow.closed === 'undefined') {
+      alert("Popup disekat! Sila enable popup untuk browser anda.");
+    }
+
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Maaf, ada masalah teknikal. Sila cuba lagi atau hubungi kami terus.");
+    
+    // Reset button on error
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = false;
+    btn.textContent = "WhatsApp ke CPR Hero!";
+  }
 }
 </script>
 
