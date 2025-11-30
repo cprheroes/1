@@ -91,12 +91,18 @@ select {
 .glow-blue { animation: glowBlue 1.5s infinite alternate; }
 @keyframes glowBlue { 0% { box-shadow: 0 0 0px rgba(30, 136, 229, 0.4); } 100% { box-shadow: 0 0 12px rgba(30, 136, 229, 0.7); } }
 
-/* Anggaran Harga Yuran styling (inline, not boxed) */
+/* Anggaran Harga Yuran styling */
 .estimate-wrap {
   margin-top: 16px;
-  margin-bottom: 6px;
+  margin-bottom: 16px;
   transition: all 0.35s ease;
   line-height: 1;
+  text-align: center; /* centerized */
+}
+.estimate-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 6px;
 }
 .estimate-amount {
   display: block;
@@ -157,11 +163,9 @@ footer.note {
 <h1>Pendaftaran Kelas CPR & Heimlich Maneuver</h1>
 <p class="subtitle">Isi maklumat di bawah. Selepas tekan WhatsApp, mesej pra-isian akan terbuka untuk semakan.</p>
 
-<!-- NAMA -->
 <label>Nama</label>
 <input type="text" id="nama" placeholder="Contoh: Nur" />
 
-<!-- JENIS KELAS -->
 <label>Jenis kelas</label>
 <select id="kelas" onchange="updateKelasInfo(); recalcAndAnimate();">
   <option value="" disabled selected>Pilih jenis kelas</option>
@@ -170,7 +174,6 @@ footer.note {
 </select>
 <div id="kelasInfo" class="info-box hidden"></div>
 
-<!-- LOKASI BARU -->
 <label>Lokasi kelas</label>
 <select id="lokasi" onchange="updateLokasiInfo(); recalcAndAnimate();">
   <option value="" disabled selected>Pilih lokasi</option>
@@ -180,11 +183,9 @@ footer.note {
 </select>
 <div id="lokasiInfo" class="info-box hidden"></div>
 
-<!-- PESERTA -->
 <label>Anggaran jumlah peserta</label>
 <input type="number" id="jumlah" value="1" min="1" onchange="recalcAndAnimate();" oninput="recalcAndAnimate();" />
 
-<!-- TARIKH -->
 <label>Cadangan tarikh (bulan & tahun)</label>
 <div style="display: flex; gap: 10px;">
   <select id="bulan" onchange="recalcAndAnimate();">
@@ -201,13 +202,12 @@ footer.note {
   </select>
 </div>
 
-<!-- ANGARAN HARGA YURAN (auto, not boxed) -->
 <div id="estimateArea" class="estimate-wrap" aria-live="polite">
+  <span class="estimate-title">Anggaran Harga Yuran</span>
   <span id="estimateAmount" class="estimate-amount" style="display:none;">RM0.00</span>
   <span id="estimateNote" class="estimate-note" style="display:none;">(Sila lengkapkan pilihan untuk lihat anggaran)</span>
 </div>
 
-<!-- LEVEL -->
 <label>Tahap kesediaan</label>
 <select id="level" onchange="highlightLevel()">
   <option value="" disabled selected>Pilih tahap kesediaan</option>
@@ -224,290 +224,92 @@ footer.note {
 <footer class="note">Form by CPR Hero</footer>
 
 <script>
-// =================== KELAS ===================
 function updateKelasInfo() {
   const box = document.getElementById("kelasInfo");
   const val = document.getElementById("kelas").value;
-
   if (!val) return box.classList.add("hidden");
-
   box.classList.remove("hidden");
-
-  box.textContent =
-    val === "Kelas Asas"
-      ? "Teori dan demo selama 4 jam – peserta akan menerima sijil penyertaan."
-      : "Teori, praktikal dan ujian selama 6 jam – peserta menerima sijil dan kad BLS rasmi.";
+  box.textContent = val==="Kelas Asas" ? 
+    "Teori dan demo selama 4 jam – peserta akan menerima sijil penyertaan." : 
+    "Teori, praktikal dan ujian selama 6 jam – peserta menerima sijil dan kad BLS rasmi.";
 }
-
-// =================== LOKASI – BARU ===================
 function updateLokasiInfo() {
   const box = document.getElementById("lokasiInfo");
   const val = document.getElementById("lokasi").value;
-
   if (!val) return box.classList.add("hidden");
-
   box.classList.remove("hidden");
-
-  if (val === "Kuala Terengganu") {
-    box.textContent = "Di premis CPR Hero (di Kuala Nerus).";
-  } else if (val === "Seremban") {
-    box.textContent = "Di premis CPR Hero (di Seremban 2).";
-  } else {
-    box.textContent = "Trainer akan datang ke lokasi anda. Sesuai dianjurkan oleh organisasi, taska, pejabat dan event. Bergantung kesesuaian lokasi.";
-  }
+  if(val==="Kuala Terengganu") box.textContent="Di premis CPR Hero (di Kuala Nerus).";
+  else if(val==="Seremban") box.textContent="Di premis CPR Hero (di Seremban 2).";
+  else box.textContent="Trainer akan datang ke lokasi anda. Sesuai dianjurkan oleh organisasi, taska, pejabat dan event. Bergantung kesesuaian lokasi.";
+}
+function highlightLevel(){
+  const level=document.getElementById("level").value;
+  const msg=document.getElementById("levelMsg");
+  msg.className="info-box"; msg.classList.remove("hidden","level1","level2","level3","level4","glow-green","glow-blue");
+  if(level==="1") msg.classList.add("level1");
+  if(level==="2") msg.classList.add("level2");
+  if(level==="3") msg.classList.add("level3","glow-green");
+  if(level==="4") msg.classList.add("level4","glow-blue");
+  const teks={"1":"Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.","2":"Level 2: Kami akan hubungi anda untuk semak tarikh dan harga.","3":"Level 3: Kami akan terus semak slot dan hantar quotation untuk deposit.","4":"Level 4: Fast lane! Booking terus dan bayar penuh."};
+  msg.textContent=teks[level];
 }
 
-// =================== LEVEL ===================
-function highlightLevel() {
-  const level = document.getElementById("level").value;
-  const msg = document.getElementById("levelMsg");
-
-  msg.className = "info-box";
-  msg.classList.remove("hidden");
-  msg.classList.remove("level1","level2","level3","level4","glow-green","glow-blue");
-
-  if (level === "1") msg.classList.add("level1");
-  if (level === "2") msg.classList.add("level2");
-  if (level === "3") msg.classList.add("level3","glow-green");
-  if (level === "4") msg.classList.add("level4","glow-blue");
-
-  const teks = {
-    1:"Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
-    2:"Level 2: Kami akan hubungi anda untuk semak tarikh dan harga.",
-    3:"Level 3: Kami akan terus semak slot dan hantar quotation untuk deposit.",
-    4:"Level 4: Fast lane! Booking terus dan bayar penuh."
-  };
-  msg.textContent = teks[level];
+const PRICES={ "Kelas Asas":250, "Kelas Lengkap":350 };
+function locationExtraPerPax(locVal){ if(!locVal) return 0; if(locVal==="Kuala Terengganu") return 0; if(locVal==="Seremban") return 100; return 100; }
+function computeTotal(){
+  const kelas=document.getElementById("kelas").value;
+  const lokasi=document.getElementById("lokasi").value;
+  let jumlah=parseInt(document.getElementById("jumlah").value,10);
+  if(isNaN(jumlah)||jumlah<1) jumlah=1;
+  const base=PRICES[kelas]||0; const extra=locationExtraPerPax(lokasi);
+  return (base+extra)*jumlah;
 }
-
-// =================== PRICE LOGIC ===================
-// base per-pax
-const PRICES = {
-  "Kelas Asas": 250,
-  "Kelas Lengkap": 350
-};
-// location extra per pax
-function locationExtraPerPax(locVal) {
-  if (!locVal) return 0;
-  if (locVal === "Kuala Terengganu") return 0;
-  if (locVal === "Seremban") return 100;
-  // On-site and any other map to 100 per pax
-  return 100;
+function maskAmount(total){
+  const n=Math.max(0,Math.round(total));
+  if(n>=1000){const leading=Math.floor(n/1000); return `RM${leading}XXX.XX`; }
+  else if(n>=100){ const leading=Math.floor(n/100); return `RM${leading}XX.XX`; }
+  else{ const leading=Math.floor(n/10); return `RM${leading}X.XX`; }
 }
-
-// compute total numeric
-function computeTotal() {
-  const kelas = document.getElementById("kelas").value;
-  const lokasi = document.getElementById("lokasi").value;
-  let jumlah = parseInt(document.getElementById("jumlah").value, 10);
-  if (isNaN(jumlah) || jumlah < 1) jumlah = 1;
-
-  const base = PRICES[kelas] || 0;
-  const extra = locationExtraPerPax(lokasi);
-
-  return (base + extra) * jumlah;
+function categoryText(total){
+  const n=Math.max(0,Math.round(total));
+  if(n===0) return "(Sila lengkapkan pilihan untuk lihat anggaran)";
+  if(n>=1000) return `(Lebih kurang dalam ${numToMalayThousands(Math.floor(n/1000))} Ribu Ringgit)`;
+  if(n>=100) return `(Lebih kurang dalam ${numToMalayUnits(Math.floor(n/100))} Ratus Ringgit)`;
+  if(n>=10) return `(Lebih kurang dalam ${numToMalaySmall(Math.floor(n/10)*10)} Ringgit)`;
+  return `(Kurang dari Sepuluh Ringgit)`;
 }
+function numToMalayThousands(num){ const map=["Kosong","Satu","Dua","Tiga","Empat","Lima","Enam","Tujuh","Lapan","Sembilan"]; return map[num]||num; }
+function numToMalayUnits(num){ const map=["Kosong","Satu","Dua","Tiga","Empat","Lima","Enam","Tujuh","Lapan","Sembilan"]; return map[num]||num; }
+function numToMalaySmall(num){ const map={10:"Sepuluh",20:"Dua Puluh",30:"Tiga Puluh",40:"Empat Puluh",50:"Lima Puluh",60:"Enam Puluh",70:"Tujuh Puluh",80:"Lapan Puluh",90:"Sembilan Puluh"}; return map[num]||num; }
 
-// =================== MASK & SPELLING (Category A) ===================
-// produce masked string like RM2XXX.XX or RM2XX.XX (always two decimals .XX)
-function maskAmount(total) {
-  // ensure total number
-  const n = Math.max(0, Math.round(total));
-  if (n >= 1000) {
-    const leading = Math.floor(n / 1000);
-    return `RM${leading}XXX.XX`;
-  } else if (n >= 100) {
-    const leading = Math.floor(n / 100);
-    return `RM${leading}XX.XX`;
-  } else {
-    // under 100: show RM0XX.XX or RM0X? They said RM2XX for 250 so use RM0XX for <100
-    const leading = Math.floor(n / 10); // show tens
-    return `RM${leading}X.XX`;
-  }
+let currentDisplayedValue=0, animFrame=null;
+function animateTo(target,duration=1000){
+  cancelAnimation(); const start=performance.now(); const from=currentDisplayedValue||0;
+  function step(ts){ const elapsed=ts-start; const t=Math.min(1,elapsed/duration); const ease=1-(1-t)*(1-t); const val=Math.round(from+(target-from)*ease); currentDisplayedValue=val; updateEstimateDisplayMasked(val); if(t<1){ animFrame=requestAnimationFrame(step); }else{ animFrame=null; currentDisplayedValue=target; updateEstimateDisplayMasked(target); } }
+  animFrame=requestAnimationFrame(step);
 }
-
-// small textual category mapping (A)
-function categoryText(total) {
-  const n = Math.max(0, Math.round(total));
-  if (n === 0) return "(Sila lengkapkan pilihan untuk lihat anggaran)";
-
-  if (n >= 1000) {
-    const thousands = Math.floor(n / 1000);
-    return `(Lebih kurang dalam ${numToMalayThousands(thousands)} Ringgit)`;
-  } else if (n >= 100) {
-    const hundreds = Math.floor(n / 100);
-    return `(Lebih kurang dalam ${numToMalayUnits(hundreds)} Ratus Ringgit)`.replace('Ratus Ratus','Ratus');
-  } else if (n >= 10) {
-    const tens = Math.floor(n / 10) * 10;
-    return `(Lebih kurang dalam ${numToMalaySmall(tens)} Ringgit)`;
-  } else {
-    return `(Kurang dari Sepuluh Ringgit)`;
-  }
+function cancelAnimation(){ if(animFrame){ cancelAnimationFrame(animFrame); animFrame=null; } }
+function updateEstimateDisplayMasked(numericValue){
+  const amountEl=document.getElementById("estimateAmount"); const noteEl=document.getElementById("estimateNote");
+  if(amountEl.style.display==="none"){ amountEl.style.display="block"; amountEl.classList.add("fade-in"); } 
+  else{ amountEl.classList.remove("fade-in"); void amountEl.offsetWidth; amountEl.classList.add("fade-in"); }
+  if(noteEl.style.display==="none"){ noteEl.style.display="block"; noteEl.classList.add("fade-in"); }
+  else{ noteEl.classList.remove("fade-in"); void noteEl.offsetWidth; noteEl.classList.add("fade-in"); }
+  amountEl.textContent=maskAmount(numericValue); noteEl.textContent=categoryText(numericValue);
 }
-
-// helpers to convert 1..9 to Malay words for thousands/hundreds
-function numToMalayThousands(num) {
-  // num is 1..9 (or more, but we assume <=9 for common amounts)
-  const map = ["Kosong","Satu","Dua","Tiga","Empat","Lima","Enam","Tujuh","Lapan","Sembilan"];
-  return map[num] || num;
+function recalcAndAnimate(){
+  const nameVal=document.getElementById("nama").value.trim(); const amountEl=document.getElementById("estimateAmount"); const noteEl=document.getElementById("estimateNote");
+  if(!nameVal){ amountEl.style.display="none"; noteEl.style.display="none"; currentDisplayedValue=0; cancelAnimation(); return; }
+  const total=computeTotal(); if(total===0){ cancelAnimation(); currentDisplayedValue=0; amountEl.style.display="block"; amountEl.classList.add("fade-in"); amountEl.textContent="RM0.00"; noteEl.style.display="block"; noteEl.classList.add("fade-in"); noteEl.textContent="(Sila lengkapkan pilihan untuk lihat anggaran)"; return; }
+  animateTo(Math.round(total),1000);
 }
-function numToMalayUnits(num) {
-  // num is 1..9 -> returns Satu..Sembilan
-  const map = ["Kosong","Satu","Dua","Tiga","Empat","Lima","Enam","Tujuh","Lapan","Sembilan"];
-  return map[num] || num;
-}
-function numToMalaySmall(num) {
-  // num like 10,20,...90
-  const map = {
-    10: "Sepuluh",
-    20: "Dua Puluh",
-    30: "Tiga Puluh",
-    40: "Empat Puluh",
-    50: "Lima Puluh",
-    60: "Enam Puluh",
-    70: "Tujuh Puluh",
-    80: "Lapan Puluh",
-    90: "Sembilan Puluh"
-  };
-  return map[num] || num;
-}
-
-// =================== COUNTER ANIMATION (1 second) ===================
-let currentDisplayedValue = 0;
-let animFrame = null;
-function animateTo(target, duration = 1000) {
-  cancelAnimation(); // stop previous
-  const start = performance.now();
-  const from = currentDisplayedValue || 0;
-  function step(ts) {
-    const elapsed = ts - start;
-    const t = Math.min(1, elapsed / duration);
-    // easeOutQuad
-    const ease = 1 - (1 - t) * (1 - t);
-    const val = Math.round(from + (target - from) * ease);
-    currentDisplayedValue = val;
-    // update masked display based on current animated val to show progressive effect
-    updateEstimateDisplayMasked(val);
-    if (t < 1) {
-      animFrame = requestAnimationFrame(step);
-    } else {
-      animFrame = null;
-      currentDisplayedValue = target;
-      updateEstimateDisplayMasked(target); // ensure final
-    }
-  }
-  animFrame = requestAnimationFrame(step);
-}
-function cancelAnimation() {
-  if (animFrame) {
-    cancelAnimationFrame(animFrame);
-    animFrame = null;
-  }
-}
-
-// update actual DOM elements (masked & note)
-function updateEstimateDisplayMasked(numericValue) {
-  const amountEl = document.getElementById("estimateAmount");
-  const noteEl = document.getElementById("estimateNote");
-
-  // ensure visible
-  if (amountEl.style.display === "none") {
-    amountEl.style.display = "block";
-    amountEl.classList.add("fade-in");
-  } else {
-    // re-trigger small fade
-    amountEl.classList.remove("fade-in");
-    void amountEl.offsetWidth;
-    amountEl.classList.add("fade-in");
-  }
-  if (noteEl.style.display === "none") {
-    noteEl.style.display = "block";
-    noteEl.classList.add("fade-in");
-  } else {
-    noteEl.classList.remove("fade-in");
-    void noteEl.offsetWidth;
-    noteEl.classList.add("fade-in");
-  }
-
-  // masked text
-  const masked = maskAmount(numericValue);
-  amountEl.textContent = masked;
-
-  // category text (A)
-  const cat = categoryText(numericValue);
-  noteEl.textContent = cat;
-}
-
-// wrapper: recalc and animate from currentDisplayedValue to new total
-function recalcAndAnimate() {
-  // show estimate area when name has any content; if name empty hide estimate
-  const nameVal = document.getElementById("nama").value.trim();
-  const amountEl = document.getElementById("estimateAmount");
-  const noteEl = document.getElementById("estimateNote");
-
-  if (!nameVal) {
-    // hide estimate entirely until name filled
-    amountEl.style.display = "none";
-    noteEl.style.display = "none";
-    currentDisplayedValue = 0;
-    cancelAnimation();
-    return;
-  }
-
-  // compute
-  const total = computeTotal();
-
-  // if total is 0 (e.g., no selection yet) show RM0.00 and the "(Sila lengkapkan...)" text
-  if (total === 0) {
-    cancelAnimation();
-    currentDisplayedValue = 0;
-    amountEl.style.display = "block";
-    amountEl.classList.add("fade-in");
-    amountEl.textContent = "RM0.00";
-    noteEl.style.display = "block";
-    noteEl.classList.add("fade-in");
-    noteEl.textContent = "(Sila lengkapkan pilihan untuk lihat anggaran)";
-    return;
-  }
-
-  // animate number to total (rounded)
-  animateTo(Math.round(total), 1000);
-}
-
-// attach event to name to reveal RM0.00 on input
-document.getElementById("nama").addEventListener("input", function() {
-  const nameVal = this.value.trim();
-  const amountEl = document.getElementById("estimateAmount");
-  const noteEl = document.getElementById("estimateNote");
-  if (nameVal) {
-    // show RM0.00 initially if other fields not ready
-    if (amountEl.style.display === "none") {
-      amountEl.style.display = "block";
-      amountEl.classList.add("fade-in");
-    }
-    amountEl.textContent = "RM0.00";
-    noteEl.style.display = "block";
-    noteEl.classList.add("fade-in");
-    noteEl.textContent = "(Sila lengkapkan pilihan untuk lihat anggaran)";
-    // attempt a quick recalc (in case other fields already filled)
-    recalcAndAnimate();
-  } else {
-    // hide if name cleared
-    amountEl.style.display = "none";
-    noteEl.style.display = "none";
-    cancelAnimation();
-    currentDisplayedValue = 0;
-  }
-});
-
-// also ensure onchange/input handlers trigger recalc
+document.getElementById("nama").addEventListener("input",function(){ const nameVal=this.value.trim(); const amountEl=document.getElementById("estimateAmount"); const noteEl=document.getElementById("estimateNote"); if(nameVal){ if(amountEl.style.display==="none"){ amountEl.style.display="block"; amountEl.classList.add("fade-in"); } amountEl.textContent="RM0.00"; noteEl.style.display="block"; noteEl.classList.add("fade-in"); noteEl.textContent="(Sila lengkapkan pilihan untuk lihat anggaran)"; recalcAndAnimate(); } else { amountEl.style.display="none"; noteEl.style.display="none"; cancelAnimation(); currentDisplayedValue=0; }});
 document.getElementById("kelas").addEventListener("input", recalcAndAnimate);
 document.getElementById("lokasi").addEventListener("input", recalcAndAnimate);
 document.getElementById("jumlah").addEventListener("input", recalcAndAnimate);
 document.getElementById("bulan").addEventListener("input", recalcAndAnimate);
 document.getElementById("tahun").addEventListener("input", recalcAndAnimate);
 
-// =================== WHATSAPP ===================
 function hantarWhatsApp() {
   const nama = document.getElementById("nama").value.trim();
   const kelas = document.getElementById("kelas").value;
@@ -518,34 +320,40 @@ function hantarWhatsApp() {
   const level = document.getElementById("level").value;
 
   if (!nama || !kelas || !lokasi || !jumlah || !bulan || !tahun || !level) {
-    alert("Sila isi semua maklumat.");
+    alert("Sila lengkapkan semua pilihan sebelum hantar WhatsApp!");
     return;
   }
 
+  // Compute total (pergi fungsi computeTotal)
+  const total = computeTotal();
+
+  // Text level
   const teksLevel = {
-    1:"Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
-    2:"Level 2: Kami akan hubungi anda untuk semak tarikh dan harga.",
-    3:"Level 3: Kami akan terus semak slot dan hantar quotation untuk deposit.",
-    4:"Level 4: Fast lane! Booking terus dan bayar penuh."
+    1: "Level 1: Anda akan menerima anggaran harga sahaja. Tiada follow-up lanjut.",
+    2: "Level 2: Kami akan hubungi anda untuk semak tarikh & harga.",
+    3: "Level 3: Kami akan terus semak slot & hantar quotation untuk deposit.",
+    4: "Level 4: Fast lane! Booking terus & bayar penuh."
   };
 
-  let mesej =
+  // Format jumlah untuk mesej
+  const totalFormatted = total.toFixed(2);
+
+  let mesej = 
 `Hai CPR Hero 👋
 Nama: ${nama}
 Jenis Kelas: ${kelas}
 Lokasi: ${lokasi}
 Anggaran Peserta: ${jumlah}
 Cadangan Tarikh: ${bulan} ${tahun}
+Anggaran Harga Yuran: RM${totalFormatted}
 Tahap Kesediaan: Level ${level}
 
 ${teksLevel[level]}
 
 Terima kasih.`;
 
+  // Open WhatsApp
   const url = "https://wa.me/601114160068?text=" + encodeURIComponent(mesej);
   window.open(url, "_blank");
 }
-</script>
 
-</body>
-</html>
