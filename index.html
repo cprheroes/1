@@ -8,6 +8,25 @@
 <meta property="og:title" content="Pendaftaran Kelas CPR Hero">
 <meta property="og:description" content="Daftar kelas CPR & Heimlich Maneuver dengan CPR Hero">
 <meta property="og:image" content="images/hero-section.webp">
+
+<!-- META PIXEL START -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1888507002059842');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1888507002059842&ev=PageView&noscript=1"
+/></noscript>
+<!-- META PIXEL END -->
+
 <style>
 body {
   font-family: 'Inter', sans-serif;
@@ -35,11 +54,11 @@ body {
   max-width: 800px;
   height: auto;
   display: block;
-  border-radius: 0px;
+  border-radius: 0;
   box-shadow: 0 8px 30px rgba(16, 24, 40, 0.08);
 }
 .hero-images img:not(:last-child) {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 .container {
   max-width: 520px;
@@ -222,9 +241,6 @@ footer.note {
   input[type="text"], select, input[type="number"], textarea {
     font-size: 16px; /* Prevent zoom on iOS */
   }
-  .hero-images img:not(:last-child) {
-    margin-bottom: 0px;
-  }
 }
 </style>
 </head>
@@ -331,7 +347,7 @@ footer.note {
 <footer class="note">Form by CPR Hero</footer>
 
 <script>
-// =================== UTILITY: SANITIZE INPUT ===================
+  // =================== UTILITY: SANITIZE INPUT ===================
 function sanitizeInput(str) {
   return str.trim().replace(/[<>]/g, '');
 }
@@ -414,7 +430,8 @@ function highlightAction() {
   };
   msg.textContent = teks[action];
 }
-  // =================== PRICE LOGIC ===================
+
+// =================== PRICE LOGIC ===================
 const PRICES = {
   "Kelas Asas": 250,
   "Kelas Lengkap": 350
@@ -670,8 +687,7 @@ document.getElementById("lokasi").addEventListener("input", recalcAndAnimate);
 document.getElementById("jumlah").addEventListener("input", recalcAndAnimate);
 document.getElementById("bulan").addEventListener("input", recalcAndAnimate);
 document.getElementById("tahun").addEventListener("input", recalcAndAnimate);
-
-// =================== WHATSAPP WITH ERROR HANDLING ===================
+  // =================== WHATSAPP WITH ERROR HANDLING + FB PIXEL ===================
 function hantarWhatsApp() {
   try {
     // Validate all fields
@@ -730,6 +746,19 @@ Tindakan Seterusnya: ${actionText[action]}`;
     mesej += "\n\nTerima kasih.";
 
     const url = "https://wa.me/601114160068?text=" + encodeURIComponent(mesej);
+    
+    // <!-- FB LEAD EVENT BEFORE REDIRECT -->
+    // Fire Facebook Pixel Lead event with 600ms delay
+    setTimeout(function() {
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {
+          content_name: kelas,
+          content_category: lokasi,
+          value: jumlah,
+          currency: 'MYR'
+        });
+      }
+    }, 600);
     
     // Open WhatsApp
     const whatsappWindow = window.open(url, "_blank");
