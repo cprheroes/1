@@ -7,7 +7,7 @@
 <meta name="description" content="Daftar kelas CPR & Heimlich Maneuver dengan CPR Hero. Sijil BLS rasmi, kelas di Kuala Terengganu dan Seremban atau on-site.">
 <meta property="og:title" content="Pendaftaran Kelas CPR Hero">
 <meta property="og:description" content="Daftar kelas CPR & Heimlich Maneuver dengan CPR Hero">
-<meta property="og:image" content="images/salespagecprhero.webp">
+<meta property="og:image" content="images/hero-section.webp">
 <style>
 body {
   font-family: 'Inter', sans-serif;
@@ -22,14 +22,24 @@ body {
   background: #fff;
   padding: 20px 0;
 }
-.hero img {
+.hero-images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.hero-images img {
   width: 100%;
   max-width: 800px;
   height: auto;
   display: block;
-  margin: auto;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(16, 24, 40, 0.08);
+}
+.hero-images img:not(:last-child) {
+  margin-bottom: 12px;
 }
 .container {
   max-width: 520px;
@@ -212,18 +222,35 @@ footer.note {
   input[type="text"], select, input[type="number"], textarea {
     font-size: 16px; /* Prevent zoom on iOS */
   }
+  .hero-images img:not(:last-child) {
+    margin-bottom: 8px;
+  }
 }
 </style>
 </head>
 
 <body>
 <section class="hero">
-  <img 
-    src="images/salespagecprhero.webp" 
-    alt="Banner kelas CPR Hero - Kursus CPR dan Heimlich Maneuver" 
-    loading="lazy"
-    width="800"
-    height="450">
+  <div class="hero-images">
+    <img 
+      src="images/hero-section.webp" 
+      alt="Banner kelas CPR Hero - Bahagian atas" 
+      loading="eager"
+      width="800"
+      height="auto">
+    <img 
+      src="images/middle-section.webp" 
+      alt="Banner kelas CPR Hero - Bahagian tengah" 
+      loading="eager"
+      width="800"
+      height="auto">
+    <img 
+      src="images/bottom-section.webp" 
+      alt="Banner kelas CPR Hero - Bahagian bawah" 
+      loading="eager"
+      width="800"
+      height="auto">
+  </div>
 </section>
 
 <div class="container">
@@ -387,8 +414,7 @@ function highlightAction() {
   };
   msg.textContent = teks[action];
 }
-
-// =================== PRICE LOGIC ===================
+  // =================== PRICE LOGIC ===================
 const PRICES = {
   "Kelas Asas": 250,
   "Kelas Lengkap": 350
@@ -729,7 +755,3 @@ Tindakan Seterusnya: ${actionText[action]}`;
     btn.textContent = "WhatsApp ke CPR Hero!";
   }
 }
-</script>
-
-</body>
-</html>
